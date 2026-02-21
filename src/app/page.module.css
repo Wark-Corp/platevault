@@ -341,41 +341,65 @@
 
 /* API Showcase */
 .apiShowcase {
-    padding: 8rem 0;
-    background: radial-gradient(circle at center, #0a0a0a 0%, #050505 100%);
+    padding: 10rem 0;
+    background: radial-gradient(circle at center, rgba(230, 57, 70, 0.05) 0%, #050505 100%);
+    border-top: 1px solid var(--surface-border);
+    border-bottom: 1px solid var(--surface-border);
 }
 
 .apiContainer {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 6rem;
     align-items: center;
 }
 
+.apiContainer h2 span {
+    background: linear-gradient(135deg, var(--accent) 0%, #ff8fa3 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .codeBlock {
-    background: #0d1117;
-    padding: 2.5rem;
-    border-radius: 2rem;
+    background: rgba(13, 17, 23, 0.8);
+    backdrop-filter: blur(20px);
+    padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+    border-radius: 1.5rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 1rem;
+    font-family: 'Fira Code', 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.95rem;
     color: #e6edf3;
     overflow-x: auto;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    box-shadow: 
+        0 40px 100px rgba(0, 0, 0, 0.6), 
+        inset 0 0 40px rgba(230, 57, 70, 0.05);
     position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .codeBlock::before {
     content: '';
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    top: 1.2rem;
+    left: 1.2rem;
     width: 10px;
     height: 10px;
     background: #ff5f56;
     border-radius: 50%;
-    box-shadow: 18px 0 #ffbd2e, 36px 0 #27c93f;
+    box-shadow: 20px 0 #ffbd2e, 40px 0 #27c93f;
+    opacity: 0.8;
 }
+
+.codeBlock code {
+    display: block;
+}
+
+.codeBlock :global(.keyword) { color: #ff7b72; }
+.codeBlock :global(.string) { color: #a5d6ff; }
+.codeBlock :global(.variable) { color: #d2a8ff; }
+.codeBlock :global(.comment) { color: #8b949e; }
+.codeBlock :global(.number) { color: #d2a8ff; }
 
 /* FAQ */
 .faq {

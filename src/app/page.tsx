@@ -146,36 +146,40 @@ export default async function Home() {
           <div className="container">
             <div className={styles.apiContainer}>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <div className="badge mb-4" style={{ width: 'fit-content' }}>API PARA DESARROLLADORES</div>
-                <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 1.2, letterSpacing: '-1px' }}>
+                <div className="badge flex items-center gap-2 mb-6" style={{ width: 'fit-content' }}>
+                  <Star size={14} fill="var(--accent)" />
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
+                    API PARA DESARROLLADORES
+                  </span>
+                </div>
+                <h2 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 1.1, letterSpacing: '-1.5px' }}>
                   Integra PlateVault <br />
-                  en tu flujo de trabajo
+                  <span>en tu flujo de trabajo</span>
                 </h2>
-                <p className="text-muted mb-8 leading-relaxed" style={{ fontSize: '1.1rem', maxWidth: '480px' }}>
+                <p className="text-muted mb-8 leading-relaxed" style={{ fontSize: '1.1rem', maxWidth: '520px', color: 'var(--text-muted)' }}>
                   Nuestra API REST de alta disponibilidad permite a empresas de automoción integrar datos técnicos reales directamente en sus CRM, sistemas de tasación o portales de venta.
                 </p>
-                <div className="flex gap-6">
-                  <div className="flex items-center gap-2 font-bold text-xs tracking-wider uppercase cursor-pointer hover:text-accent transition-colors">
-                    <Code2 size={18} className="text-accent" /> Documentación
+                <div className="flex gap-8">
+                  <div className="flex items-center gap-3 font-bold text-xs tracking-wider uppercase cursor-pointer hover:text-accent transition-colors">
+                    <Code2 size={20} className="text-accent" /> Documentación
                   </div>
-                  <div className="flex items-center gap-2 font-bold text-xs tracking-wider uppercase cursor-pointer hover:text-accent transition-colors">
-                    <Lock size={18} className="text-accent" /> Auth Seguro
+                  <div className="flex items-center gap-3 font-bold text-xs tracking-wider uppercase cursor-pointer hover:text-accent transition-colors">
+                    <Lock size={20} className="text-accent" /> Auth Seguro
                   </div>
                 </div>
               </div>
               <div className={styles.codeBlock}>
                 <pre style={{ margin: 0 }}>
                   <code style={{ fontSize: '0.95rem', lineHeight: 1.4 }}>
-                    {`GET /api/v1/vehicle/1234ABC
-
-{
-  "brand": "AUDI",
-  "model": "A3 Sportback",
-  "engine": "35 TFSI 150CV",
-  "fuel": "Gasoline/PHEV",
-  "emissions": "EU6 AP",
-  "status": "success"
-}`}
+                    <span className="keyword">GET</span> /api/v1/vehicle/1234ABC<br /><br />
+                    {`{`}<br />
+                    {`  "`}<span className="variable">brand</span>{`": "`}<span className="string">AUDI</span>{`",`}<br />
+                    {`  "`}<span className="variable">model</span>{`": "`}<span className="string">A3 Sportback</span>{`",`}<br />
+                    {`  "`}<span className="variable">engine</span>{`": "`}<span className="string">35 TFSI 150CV</span>{`",`}<br />
+                    {`  "`}<span className="variable">fuel</span>{`": "`}<span className="string">Gasoline/PHEV</span>{`",`}<br />
+                    {`  "`}<span className="variable">emissions</span>{`": "`}<span className="string">EU6 AP</span>{`",`}<br />
+                    {`  "`}<span className="variable">status</span>{`": "`}<span className="string">success</span>{`"`}<br />
+                    {`}`}
                   </code>
                 </pre>
               </div>
