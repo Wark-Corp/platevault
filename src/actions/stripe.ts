@@ -6,7 +6,7 @@ import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2024-06-20", // Versión estable confirmada por la CLI
+    apiVersion: "2024-06-20" as any, // Cast a any para evitar errores de tipado en el build
 });
 
 export async function createCheckoutSession() {
