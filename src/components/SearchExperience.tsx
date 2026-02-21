@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { lookupPlate, getSearchStats } from "@/actions/lookup";
 import styles from "../app/dashboard/dashboard.module.css";
 import TechnicalSheet from "@/components/TechnicalSheet";
@@ -99,9 +99,13 @@ export default function SearchExperience() {
         }
     }, [plate, source, stats, fetchStats]);
 
+    // Control para evitar bucles con la búsqueda por URL
+    const initialSearchDone = useRef(false);
+
     useEffect(() => {
         const urlPlate = searchParams.get("plate");
-        if (urlPlate) {
+        if (urlPlate && !initialSearchDone.current) {
+            initialSearchDone.current = true;
             handleSearch(urlPlate);
         }
     }, [searchParams, handleSearch]);
