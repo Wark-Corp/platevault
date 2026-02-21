@@ -88,13 +88,17 @@ export default function Sidebar({ session }: { session: any }) {
                     <Star size={22} />
                     <span>Favoritos</span>
                 </Link>
+                <Link href="/dashboard/tickets" className={`${styles.mobileNavItem} ${pathname.startsWith("/dashboard/tickets") ? styles.mobileNavItemActive : ""}`}>
+                    <LifeBuoy size={22} />
+                    <span>Tickets</span>
+                </Link>
                 <Link href="/dashboard/compare" className={`${styles.mobileNavItem} ${pathname === "/dashboard/compare" ? styles.mobileNavItemActive : ""}`}>
                     <ArrowLeftRight size={22} />
                     <span>Comparar</span>
                 </Link>
-                <Link href="/dashboard/history" className={`${styles.mobileNavItem} ${pathname === "/dashboard/history" ? styles.mobileNavItemActive : ""}`}>
-                    <Clock size={22} />
-                    <span>Historial</span>
+                <Link href="/dashboard/account" className={`${styles.mobileNavItem} ${pathname === "/dashboard/account" ? styles.mobileNavItemActive : ""}`}>
+                    <UserIcon size={22} />
+                    <span>Cuenta</span>
                 </Link>
             </div>
         </aside>
