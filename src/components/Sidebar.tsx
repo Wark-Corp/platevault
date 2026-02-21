@@ -97,30 +97,6 @@ export default function Sidebar({ session }: { session: any }) {
                         </button>
                     </form>
                 </div>
-
-                {/* Mobile Bottom Navigation */}
-                <div className={styles.mobileNav}>
-                    <Link href="/dashboard" className={`${styles.mobileNavItem} ${pathname === "/dashboard" ? styles.mobileNavItemActive : ""}`}>
-                        <Search size={22} />
-                        <span>Buscador</span>
-                    </Link>
-                    <Link href="/dashboard/favorites" className={`${styles.mobileNavItem} ${pathname === "/dashboard/favorites" ? styles.mobileNavItemActive : ""}`}>
-                        <Star size={22} />
-                        <span>Favoritos</span>
-                    </Link>
-                    <Link href="/dashboard/tickets" className={`${styles.mobileNavItem} ${pathname.startsWith("/dashboard/tickets") ? styles.mobileNavItemActive : ""}`}>
-                        <LifeBuoy size={22} />
-                        <span>Tickets</span>
-                    </Link>
-                    <Link href="/dashboard/compare" className={`${styles.mobileNavItem} ${pathname === "/dashboard/compare" ? styles.mobileNavItemActive : ""}`}>
-                        <ArrowLeftRight size={22} />
-                        <span>Comparar</span>
-                    </Link>
-                    <Link href="/dashboard/account" className={`${styles.mobileNavItem} ${pathname === "/dashboard/account" ? styles.mobileNavItemActive : ""}`}>
-                        <UserIcon size={22} />
-                        <span>Cuenta</span>
-                    </Link>
-                </div>
             </aside>
         </>
     );
