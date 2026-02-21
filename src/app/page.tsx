@@ -191,6 +191,10 @@ export default async function Home() {
         <section className={styles.features}>
           <div className="container">
             <div className={styles.sectionHeader}>
+              <div className="badge flex items-center gap-2 mb-4" style={{ margin: '0 auto', width: 'fit-content' }}>
+                <ShieldCheck size={14} fill="var(--accent)" />
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '2px' }}>Protección de Datos</span>
+              </div>
               <h2>Seguridad de Nivel Militar</h2>
               <p>Protegemos tus datos y tu privacidad con las tecnologías más robustas del mercado.</p>
             </div>
@@ -202,13 +206,13 @@ export default async function Home() {
               </div>
               <div className={styles.featureCard}>
                 <div className={styles.featureIcon}><ShieldCheck size={24} /></div>
-                <h3>2FA Obligatorio</h3>
-                <p>Ofrecemos autenticación en dos pasos para asegurar que solo tú accedas a tu panel técnico.</p>
+                <h3>2FA Nativo</h3>
+                <p>Implementamos autenticación en dos pasos (TOTP) para asegurar que solo tú accedas a tu panel técnico.</p>
               </div>
               <div className={styles.featureCard}>
                 <div className={styles.featureIcon}><Smartphone size={24} /></div>
-                <h3>Acceso Móvil Seguro</h3>
-                <p>Nuestra plataforma está optimizada para que consultes datos en el taller o concesionario con total seguridad.</p>
+                <h3>Acceso Multiplataforma</h3>
+                <p>Nuestra plataforma está optimizada para que consultes datos en el taller o concesionario con total seguridad en cualquier dispositivo.</p>
               </div>
             </div>
           </div>
