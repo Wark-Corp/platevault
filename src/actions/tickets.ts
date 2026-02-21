@@ -21,7 +21,7 @@ export async function createTicket(formData: FormData) {
     // Para este MVP local, guardaremos la info del archivo si viene en el form
     const files = formData.getAll("attachments") as File[];
 
-    const ticket = await prisma.ticket.create({
+    const ticket = await (prisma as any).ticket.create({
         data: {
             subject,
             priority,
@@ -50,7 +50,7 @@ export async function createTicket(formData: FormData) {
             if (file.size > 15 * 1024 * 1024) throw new Error("Archivo demasiado grande (máx 15MB)");
 
             // En un entorno real subiríamos a S3/Cloudinary. Aquí simulamos el registro.
-            await prisma.attachment.create({
+            await (prisma as any).attachment.create({
                 data: {
                     ticketMessageId: ticket.messages[0].id,
                     fileName: file.name,
@@ -73,7 +73,7 @@ export async function replyToTicket(ticketId: string, content: string, isAdmin: 
 
     if (content.length > 4000) throw new Error("El mensaje no puede superar los 4000 caracteres");
 
-    const message = await prisma.ticketMessage.create({
+    const message = await (prisma as any).ticketMessage.create({
         data: {
             ticketId,
             content,
@@ -84,7 +84,7 @@ export async function replyToTicket(ticketId: string, content: string, isAdmin: 
 
     // Si responde un admin o soporte, marcamos como IN_PROGRESS si estaba OPEN
     if (isAdmin) {
-        await prisma.ticket.update({
+        await (prisma as any).ticket.update({
             where: { id: ticketId },
             data: { status: "IN_PROGRESS" }
         });
@@ -97,7 +97,7 @@ export async function replyToTicket(ticketId: string, content: string, isAdmin: 
 
 export async function updateTicketMetadata(ticketId: string, data: { status?: any, priority?: any, department?: any }) {
     const session = await auth();
-    const role = session?.user?.role;
+    const role = (session?.user as any)?.role;
     if (role !== "ADMIN" && role !== "SUPPORT" && role !== "SUPERADMIN") {
         throw new Error("No autorizado");
     }
@@ -107,7 +107,7 @@ export async function updateTicketMetadata(ticketId: string, data: { status?: an
     if (data.priority) updateData.priority = data.priority;
     if (data.department) updateData.department = data.department;
 
-    await prisma.ticket.update({
+    await (prisma as any).ticket.update({
         where: { id: ticketId },
         data: updateData
     });
@@ -122,7 +122,7 @@ export async function getUserTickets() {
     const session = await auth();
     if (!session?.user?.id) return [];
 
-    return await prisma.ticket.findMany({
+    return await (prisma as any).ticket.findMany({
         where: { userId: session.user.id },
         include: {
             messages: {
@@ -136,12 +136,12 @@ export async function getUserTickets() {
 
 export async function getAllTickets() {
     const session = await auth();
-    const role = session?.user?.role;
+    const role = (session?.user as any)?.role;
     if (role !== "ADMIN" && role !== "SUPPORT" && role !== "SUPERADMIN") {
         throw new Error("No autorizado");
     }
 
-    return await prisma.ticket.findMany({
+    return await (prisma as any).ticket.findMany({
         include: {
             user: { select: { name: true, email: true, image: true } },
             messages: {
@@ -157,7 +157,7 @@ export async function getTicketDetails(ticketId: string) {
     const session = await auth();
     if (!session?.user?.id) throw new Error("No autorizado");
 
-    const ticket = await prisma.ticket.findUnique({
+    const ticket = await (prisma as any).ticket.findUnique({
         where: { id: ticketId },
         include: {
             user: {
@@ -183,7 +183,7 @@ export async function getTicketDetails(ticketId: string) {
     if (!ticket) throw new Error("Ticket no encontrado");
 
     // Verificar acceso (Admin/Soporte o el propio usuario)
-    const role = session.user.role;
+    const role = (session.user as any).role;
     if (role === "USER" && ticket.userId !== session.user.id) {
         throw new Error("No tienes permiso para ver este ticket");
     }
@@ -193,7 +193,7 @@ export async function getTicketDetails(ticketId: string) {
 
 export async function deleteTicket(ticketId: string) {
     const session = await auth();
-    const role = session?.user?.role;
+    const role = (session?.user as any)?.role;
 
     // Solo ADMIN puede eliminar tickets (Soporte no)
     if (role !== "ADMIN") {
@@ -201,7 +201,7 @@ export async function deleteTicket(ticketId: string) {
     }
 
     try {
-        await prisma.ticket.delete({
+        await (prisma as any).ticket.delete({
             where: { id: ticketId }
         });
 
