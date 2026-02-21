@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import styles from "../../admin.module.css";
+import styles from "../admin.module.css";
 import { verifyPlate, revokeVerification, getPlateVerificationStatus } from "@/actions/verify";
 import { Search, ShieldCheck, ShieldX, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 
