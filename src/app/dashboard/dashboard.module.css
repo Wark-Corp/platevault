@@ -307,90 +307,152 @@
     }
 }
 
+.mobileHeader {
+    display: none;
+}
+
+.overlay {
+    display: none;
+}
+
 @media (max-width: 768px) {
+    .mobileHeader {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: rgba(10, 10, 10, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--surface-border);
+        padding: 0 1.5rem;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1100;
+    }
+
+    .menuToggle {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        transition: background 0.2s;
+    }
+
+    .menuToggle:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1050;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100vh;
+        z-index: 1200;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+        border-right: 1px solid var(--surface-border);
+    }
+
+    .sidebarOpen {
+        transform: translateX(280px);
+    }
+
+    .sidebar>.logo {
+        display: block !important;
+        margin-bottom: 2rem;
+    }
+
+    .nav {
+        display: flex;
+    }
+
+    .user {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--surface-border);
+    }
+
+    .user p {
+        display: block;
+    }
+
     .wrapper {
         flex-direction: column;
     }
 
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        padding: 1rem 1.5rem;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        border-right: none;
-        border-bottom: 1px solid var(--surface-border);
-    }
-
-    .logo {
-        margin-bottom: 0;
-        font-size: 1.4rem;
-    }
-
-    .nav {
-        display: none;
-    }
-
-    .user {
-        margin-top: 0;
-        padding-top: 0;
-        border-top: none;
-        display: flex;
-        align-items: center;
-    }
-
-    .user>div {
-        display: flex;
-        align-items: center;
-    }
-
-    .user p {
-        display: none;
-    }
-
     .main {
         padding: 1.5rem;
+        margin-top: 60px;
         padding-bottom: 80px;
-        /* Space for bottom nav */
     }
+}
 
-    .header h1 {
-        font-size: 1.8rem;
-    }
+.header h1 {
+    font-size: 1.8rem;
+}
 
-    .header p {
-        font-size: 0.95rem;
-    }
+.header p {
+    font-size: 0.95rem;
+}
 
-    .searchBar {
-        flex-direction: column;
-        padding: 1rem;
-    }
+.searchBar {
+    flex-direction: column;
+    padding: 1rem;
+}
 
-    .searchBar input {
-        font-size: 1.2rem;
-        text-align: center;
-    }
+.searchBar input {
+    font-size: 1.2rem;
+    text-align: center;
+}
 
-    .searchBar button {
-        width: 100%;
-        min-width: unset;
-        padding: 1rem;
-    }
+.searchBar button {
+    width: 100%;
+    min-width: unset;
+    padding: 1rem;
+}
 
-    .sourceToggle {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
+.sourceToggle {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
 
-    .sourceToggle button {
-        font-size: 0.8rem;
-        padding: 0.6rem;
-    }
+.sourceToggle button {
+    font-size: 0.8rem;
+    padding: 0.6rem;
+}
 }
 
 /* Bottom Navigation for Mobile */
