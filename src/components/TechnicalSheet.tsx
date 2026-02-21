@@ -76,7 +76,12 @@ export default function TechnicalSheet({ specs, plate, versionId }: Props) {
             <header className={styles.header}>
                 <div className={styles.mainTitle}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-                        <h2>{specs.make} {specs.model}</h2>
+                        <h2>
+                            {specs.make} {specs.model}
+                            <span className={styles.yearHighlight}>
+                                {" "}({(specs as any).yearStart || specs.year}{((specs as any).yearEnd || (specs as any).yearStart) ? `-${(specs as any).yearEnd || 'Act'}` : ''})
+                            </span>
+                        </h2>
                         {specs.pricing?.source?.includes("External") && (
                             <span style={{
                                 background: 'rgba(255, 183, 3, 0.2)',
@@ -164,7 +169,7 @@ export default function TechnicalSheet({ specs, plate, versionId }: Props) {
 
                     <div className={styles.item}>
                         <div className={styles.itemLabel}>
-                            <span>Normativa</span> <strong>Euro {specs.engine.euro_norm}</strong>
+                            <span>Normativa</span> <strong>{specs.engine.euro_norm}</strong>
                         </div>
                     </div>
                 </section>

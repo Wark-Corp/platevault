@@ -29,8 +29,18 @@
     font-weight: 900;
     margin-bottom: 0.5rem;
     background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.yearHighlight {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    opacity: 0.8;
+    background: none;
+    -webkit-text-fill-color: var(--text-muted);
 }
 
 .titleActions {
