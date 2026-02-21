@@ -1,0 +1,224 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  PREMIUM
+  SUPPORT
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role             Role      @default(USER)
+  twoFactorSecret  String?
+  twoFactorEnabled Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  sessions      Session[]
+  accounts      Account[]
+  lookups       PlateLookup[]
+  auditLogs     AuditLog[]
+  favorites     Favorite[]
+  tickets       Ticket[]
+  ticketMessages TicketMessage[]
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model PlateLookup {
+  id            String   @id @default(cuid())
+  plate         String
+  timestamp     DateTime @default(now())
+  userId        String?
+  ip            String
+  userAgent     String?
+  requestId     String   @unique
+  responseHash  String?
+  
+  user          User?    @relation(fields: [userId], references: [id])
+}
+
+model VehicleVersion {
+  id              String   @id @default(cuid())
+  make            String   // Marca
+  model           String   // Modelo
+  generation      String?  // Generación
+  trim            String?  // Versión / Trim
+  yearStart       Int?
+  yearEnd         Int?
+  fuel            String?
+  transmission    String?
+  
+  // Specs técnicos en JSON flexible
+  specs           Json?    
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  sources         SpecSource[]
+  mappings        PlateMapping[]
+  favoritedBy     Favorite[]
+}
+
+model PlateMapping {
+  id               String         @id @default(cuid())
+  plate            String         @unique
+  versionId        String
+  confidence       Float          @default(1.0)
+  lastUpdated      DateTime       @default(now())
+  
+  version          VehicleVersion @relation(fields: [versionId], references: [id])
+}
+
+model SpecSource {
+  id              String         @id @default(cuid())
+  versionId       String
+  section         String         // e.g. "Engine", "Dimensions"
+  sourceName      String         // e.g. "JATO", "IDAE"
+  url             String?
+  lastUpdated     DateTime       @default(now())
+  
+  version          VehicleVersion @relation(fields: [versionId], references: [id])
+}
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  timestamp     DateTime @default(now())
+  userId        String?
+  ip            String
+  userAgent     String?
+  action        String   // e.g. "LOGIN", "LOOKUP", "ADMIN_UPDATE"
+  details       Json?    // Información adicional
+  
+  user          User?    @relation(fields: [userId], references: [id])
+}
+
+model GlobalSettings {
+  key         String   @id
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Favorite {
+  id               String         @id @default(cuid())
+  userId           String
+  vehicleVersionId String
+  plate            String?        // Opcional: si el favorito es de una matrícula específica
+  createdAt        DateTime       @default(now())
+
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  version          VehicleVersion @relation(fields: [vehicleVersionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, vehicleVersionId, plate])
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TicketDepartment {
+  GENERAL
+  TECHNICAL
+  SALES
+  MARKETING
+  LEGAL
+  SECURITY
+}
+
+model Ticket {
+  id          String           @id @default(cuid())
+  subject     String
+  status      TicketStatus     @default(OPEN)
+  priority    TicketPriority   @default(MEDIUM)
+  department  TicketDepartment @default(GENERAL)
+  userId      String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages    TicketMessage[]
+}
+
+model TicketMessage {
+  id          String       @id @default(cuid())
+  ticketId    String
+  userId      String
+  content     String       // Máximo 4000 caracteres (validación en lógica)
+  isAdmin     Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+
+  ticket      Ticket       @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  attachments Attachment[]
+}
+
+model Attachment {
+  id              String        @id @default(cuid())
+  ticketMessageId String
+  fileName        String
+  fileSize        Int           // En bytes, máximo 15MB
+  fileUrl         String        // URL o path (en local será path)
+  fileType        String
+  createdAt       DateTime      @default(now())
+
+  message         TicketMessage @relation(fields: [ticketMessageId], references: [id], onDelete: Cascade)
+}

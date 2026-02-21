@@ -1,0 +1,514 @@
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--surface-border);
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    cursor: default;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.nav {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.loginBtn {
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+}
+
+.loginBtn:hover {
+    color: var(--foreground);
+}
+
+.registerBtn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: var(--transition-normal);
+}
+
+.registerBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+}
+
+.hero {
+    padding: 8rem 0 4rem 0;
+    text-align: center;
+    background: radial-gradient(circle at top center, rgba(230, 57, 70, 0.08) 0%, transparent 60%);
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1.5px;
+}
+
+.title span {
+    background: linear-gradient(135deg, var(--accent) 0%, #ff8fa3 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    line-height: 1.5;
+}
+
+.searchPlaceholder {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.searchPlaceholder input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--foreground);
+    font-size: 1.2rem;
+    padding: 1rem;
+    outline: none;
+}
+
+.searchPlaceholder button {
+    padding: 0.8rem 2.5rem;
+    border-radius: 14px;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--accent) 0%, #ff8fa3 100%);
+    border: none;
+    transition: var(--transition-normal);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.searchPlaceholder button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.statItem {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition-normal);
+}
+
+.statItem:hover {
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-5px);
+}
+
+.statNumber {
+    display: block;
+    font-size: 2.8rem;
+    font-weight: 950;
+    color: var(--foreground);
+    margin-bottom: 0.2rem;
+    background: linear-gradient(135deg, #fff 0%, #bbb 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.statLabel {
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    font-weight: 900;
+}
+
+.featureCard {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: var(--transition-normal);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.featureCard:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--accent);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(230, 57, 70, 0.15);
+}
+
+.featureIcon {
+    width: 36px;
+    height: 36px;
+    background: rgba(230, 57, 70, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+/* --- New Sections Styling --- */
+
+.sectionHeader {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem auto;
+}
+
+.sectionHeader h2 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+.sectionHeader p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Workflow */
+.workflow {
+    padding: 8rem 0;
+    background: linear-gradient(to bottom, transparent, rgba(230, 57, 70, 0.02), transparent);
+}
+
+.workflowGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+.step {
+    position: relative;
+    text-align: center;
+}
+
+.stepNumber {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0 auto 2rem auto;
+    box-shadow: 0 0 30px rgba(230, 57, 70, 0.4);
+}
+
+/* Pricing */
+.pricing {
+    padding: 8rem 0;
+}
+
+.pricingGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.priceCard {
+    padding: 2rem 1.2rem;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition-normal);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.priceCardFeatured {
+    background: rgba(230, 57, 70, 0.04);
+    border: 1px solid var(--accent);
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 30px 60px rgba(230, 57, 70, 0.2);
+}
+
+.priceCard h3 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.5px;
+}
+
+.priceValue {
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin: 1rem 0;
+}
+
+.priceValue span {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+.priceFeatures {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    flex: 1;
+}
+
+.priceFeatures li {
+    padding: 0.8rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--text-muted);
+}
+
+.pricingBtn {
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 16px;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    transition: var(--transition-normal);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.pricingBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.pricingBtnFeatured {
+    background: linear-gradient(135deg, var(--accent) 0%, #ff8fa3 100%);
+    border: none;
+    box-shadow: 0 10px 25px rgba(230, 57, 70, 0.3);
+}
+
+.pricingBtnFeatured:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(230, 57, 70, 0.4);
+}
+
+/* API Showcase */
+.apiShowcase {
+    padding: 8rem 0;
+    background: radial-gradient(circle at center, #0a0a0a 0%, #050505 100%);
+}
+
+.apiContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.codeBlock {
+    background: #0d1117;
+    padding: 2.5rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 1rem;
+    color: #e6edf3;
+    overflow-x: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    position: relative;
+}
+
+.codeBlock::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 10px;
+    height: 10px;
+    background: #ff5f56;
+    border-radius: 50%;
+    box-shadow: 18px 0 #ffbd2e, 36px 0 #27c93f;
+}
+
+/* FAQ */
+.faq {
+    padding: 8rem 0;
+}
+
+.faqGrid {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.faqItem {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2rem 2.5rem;
+    border-radius: 2.5rem;
+    transition: var(--transition-normal);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.faqItem:hover {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.faqItem h4 {
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+
+/* Responsive fixes */
+@media (max-width: 1100px) {
+
+    .pricingGrid,
+    .workflowGrid,
+    .apiContainer {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .priceCardFeatured {
+        transform: none;
+    }
+}
+
+.footer {
+    padding: 6rem 0 3rem 0;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid var(--surface-border);
+}
+
+.footerGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.footerInfo p {
+    color: var(--text-muted);
+    margin-top: 1.5rem;
+    line-height: 1.6;
+}
+
+.footerLinks h4 {
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.footerLinks ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.footerLinks a {
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+}
+
+.footerLinks a:hover {
+    color: var(--accent);
+}
+
+.copyright {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.registerNotice {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+@media (max-width: 900px) {
+    .footerGrid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .statsGrid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 3rem;
+        letter-spacing: -1px;
+    }
+
+    .hero {
+        padding: 6rem 0 4rem 0;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+}

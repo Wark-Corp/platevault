@@ -1,0 +1,275 @@
+.sheet {
+    margin-top: 3rem;
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.mainTitle h2 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.titleActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    border: 1px solid rgba(230, 57, 70, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.dgtLabel {
+    padding: 0.6rem 1.8rem;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.label-0 {
+    background: #0081c9;
+    color: white;
+}
+
+.label-ECO {
+    background: linear-gradient(90deg, #0081c9 0%, #2a9d8f 100%);
+    color: white;
+}
+
+.label-C {
+    background: #f4d35e;
+    color: #1a1a1a;
+}
+
+.label-B {
+    background: #ee964b;
+    color: #1a1a1a;
+}
+
+.label-A {
+    background: #4a4a4a;
+    color: white;
+}
+
+.actionsBar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.actionBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.actionBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.actionBtnActive {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2rem;
+}
+
+.section {
+    padding: 2.2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.section h3 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.itemLabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.itemLabel span {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.itemLabel strong {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Progress Bars para Specs */
+.progressTrack {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 0.2rem;
+}
+
+.progressBar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent) 0%, #ff4d6d 100%);
+    border-radius: 10px;
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blueBar .progressBar {
+    background: linear-gradient(90deg, #0081c9 0%, #00b4d8 100%);
+}
+
+.pricing {
+    border: 1px solid rgba(230, 57, 70, 0.15);
+    background: linear-gradient(135deg, rgba(230, 57, 70, 0.03) 0%, transparent 100%);
+}
+
+.msrpValue {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--accent);
+    margin: 0.5rem 0;
+}
+
+.source {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.disclaimer {
+    margin-top: 4rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+    opacity: 0.5;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .mainTitle h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .mainTitle h2 {
+        font-size: 1.6rem;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .actionsBar {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .actionBtn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .itemLabel strong {
+        font-size: 1rem;
+    }
+
+    .section {
+        padding: 1.5rem;
+    }
+
+    .msrpValue {
+        font-size: 1.6rem;
+    }
+}
