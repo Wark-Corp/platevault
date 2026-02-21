@@ -314,6 +314,113 @@
     }
 }
 
+/* ── Mobile Drawer ── */
+.mobileHeader {
+    display: none;
+}
+
+.overlay {
+    display: none;
+}
+
+.sidebarOpen {
+    transform: translateX(280px);
+}
+
+@media (max-width: 768px) {
+    .mobileHeader {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 68px;
+        background: rgba(10, 10, 10, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--surface-border);
+        padding: 1rem 1.5rem 0;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1100;
+    }
+
+    .menuToggle {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        transition: background 0.2s;
+    }
+
+    .menuToggle:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1050;
+        animation: fadeInOverlay 0.3s ease;
+    }
+
+    @keyframes fadeInOverlay {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100vh;
+        z-index: 1200;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+        border-right: 1px solid var(--surface-border);
+        overflow-y: auto;
+        flex-direction: column;
+        padding: 2rem;
+    }
+
+    .sidebarOpen {
+        transform: translateX(280px);
+    }
+
+    .wrapper {
+        flex-direction: row;
+    }
+
+    .main {
+        flex: 1;
+        width: 100%;
+        padding: 1.5rem;
+        margin-top: 68px;
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+    }
+}
+
 .accountContainer {
     max-width: 800px;
     width: 100%;
