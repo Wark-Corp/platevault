@@ -384,6 +384,9 @@
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
         border-right: 1px solid var(--surface-border);
+        overflow-y: auto;
+        flex-direction: column;
+        padding: 2rem;
     }
 
     .sidebarOpen {
@@ -410,10 +413,12 @@
     }
 
     .wrapper {
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .main {
+        flex: 1;
+        width: 100%;
         padding: 1.5rem;
         margin-top: 68px;
     }
