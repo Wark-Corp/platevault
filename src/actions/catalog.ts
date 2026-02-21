@@ -80,19 +80,33 @@ export async function getVehicleVersions(query?: string, page: number = 1, limit
 
     const skip = (page - 1) * limit;
 
-    const whereClause: any = query
-        ? {
-            OR: [
-                { make: { contains: query } },
-                { model: { contains: query } },
-            ],
-        }
-        : {};
+    // Lógica de búsqueda inteligente
+    let whereClause: any = {};
+
+    if (query && query.trim()) {
+        const keywords = query.trim().split(/\s+/);
+
+        // Cada palabra clave debe coincidir con alguno de los campos clave (AND de términos)
+        whereClause = {
+            AND: keywords.map(keyword => ({
+                OR: [
+                    { make: { contains: keyword, mode: 'insensitive' } },
+                    { model: { contains: keyword, mode: 'insensitive' } },
+                    { generation: { contains: keyword, mode: 'insensitive' } },
+                    { trim: { contains: keyword, mode: 'insensitive' } },
+                ]
+            }))
+        };
+    }
 
     const [versions, total] = await Promise.all([
         prisma.vehicleVersion.findMany({
             where: whereClause,
-            orderBy: { updatedAt: "desc" },
+            orderBy: [
+                { make: 'asc' },
+                { model: 'asc' },
+                { updatedAt: 'desc' }
+            ],
             skip,
             take: limit,
             include: {
