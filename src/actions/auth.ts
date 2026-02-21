@@ -6,6 +6,7 @@ import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { logAudit } from "@/lib/audit";
+import speakeasy from "speakeasy";
 
 export async function register(formData: FormData) {
     const email = formData.get("email") as string;
@@ -45,11 +46,39 @@ export async function register(formData: FormData) {
 export async function login(formData: FormData) {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+    const code = formData.get("code") as string;
 
     // Check Rate Limit
     const limit = await checkRateLimit(email, "AUTH");
     if (!limit.allowed) {
         return { error: "Demasiados intentos de acceso. Espera unos minutos." };
+    }
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user || !user.password) {
+        return { error: "Credenciales inválidas." };
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+        return { error: "Credenciales inválidas." };
+    }
+
+    // Is 2FA enabled for this user?
+    if (user.twoFactorEnabled) {
+        if (!code) {
+            return { twoFactorRequired: true };
+        }
+
+        const isTokenValid = speakeasy.totp.verify({
+            secret: user.twoFactorSecret!,
+            encoding: 'base32',
+            token: code
+        });
+
+        if (!isTokenValid) {
+            return { error: "Código 2FA inválido.", twoFactorRequired: true };
+        }
     }
 
     try {
