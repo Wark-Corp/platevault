@@ -115,6 +115,8 @@ model PlateMapping {
   versionId        String
   confidence       Float          @default(1.0)
   lastUpdated      DateTime       @default(now())
+  verified         Boolean        @default(false)
+  verifiedAt       DateTime?
   
   version          VehicleVersion @relation(fields: [versionId], references: [id])
 }

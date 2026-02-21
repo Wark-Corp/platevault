@@ -154,8 +154,10 @@ export async function lookupPlate(plate: string, source: "internal" | "external"
         });
 
         if (mapping) {
+            const isVerified = (mapping as any).verified ?? false;
             result = {
                 ...mapping.version,
+                verified: isVerified,
                 specs: {
                     ...(mapping.version.specs as any),
                     make: mapping.version.make,
@@ -164,6 +166,7 @@ export async function lookupPlate(plate: string, source: "internal" | "external"
                     trim: mapping.version.trim,
                     yearStart: mapping.version.yearStart,
                     yearEnd: mapping.version.yearEnd,
+                    verified: isVerified,
                 } as unknown as VehicleSpecs,
                 sources: mapping.version.sources
             };

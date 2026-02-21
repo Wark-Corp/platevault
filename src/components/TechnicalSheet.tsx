@@ -97,6 +97,12 @@ export default function TechnicalSheet({ specs, plate, versionId }: Props) {
                             </span>
                         )}
                     </div>
+                    {(specs as any).verified && (
+                        <div className={styles.verifiedBadge}>
+                            <CheckCircle2 size={15} />
+                            Verificado por PlateVault
+                        </div>
+                    )}
                     <div className={styles.titleActions}>
                         <span className={styles.badge}>{specs.trim || "Versión Base"}</span>
                         {specs.generation && <span className={styles.badge}>{specs.generation}</span>}

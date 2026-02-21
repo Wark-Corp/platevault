@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "../app/admin/admin.module.css";
 import { logout } from "@/actions/auth";
-import { BarChart, Car, Users, Link as LinkIcon, LogOut, LayoutDashboard, LifeBuoy } from "lucide-react";
+import { BarChart, Car, Users, Link as LinkIcon, LogOut, LayoutDashboard, LifeBuoy, ShieldCheck } from "lucide-react";
 
 export default function AdminSidebar({ session }: { session: any }) {
     const pathname = usePathname();
@@ -27,6 +27,9 @@ export default function AdminSidebar({ session }: { session: any }) {
                         </Link>
                         <Link href="/admin/mappings" className={pathname?.startsWith("/admin/mappings") ? styles.active : ""}>
                             <LinkIcon size={18} /> Vínculos de Matrículas
+                        </Link>
+                        <Link href="/admin/verify" className={pathname?.startsWith("/admin/verify") ? styles.active : ""}>
+                            <ShieldCheck size={18} /> Verificar Matrículas
                         </Link>
                         <Link href="/admin/users" className={pathname?.startsWith("/admin/users") ? styles.active : ""}>
                             <Users size={18} /> Usuarios
