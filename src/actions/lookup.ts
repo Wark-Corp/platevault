@@ -53,12 +53,11 @@ export type VehicleSpecs = {
 
 async function lookupExternalPlate(plate: string): Promise<VehicleSpecs | null> {
     const apiKey = process.env.RAPIDAPI_KEY || "aa923e8b8bmshadd068dbbed6177p1f0d08jsn3db6b4dbf4e3";
-    const url = `https://api-matriculas-espana.p.rapidapi.com/es?plate=${plate}`;
+    const url = `https://api-matriculas-espana.p.rapidapi.com/es?plate=${plate}&rapidapi-key=${apiKey}`;
 
     try {
         const response = await fetch(url, {
             headers: {
-                'x-rapidapi-key': apiKey,
                 'x-rapidapi-host': 'api-matriculas-espana.p.rapidapi.com'
             },
             cache: 'no-store'
