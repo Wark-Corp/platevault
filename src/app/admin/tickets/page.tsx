@@ -3,6 +3,7 @@ import { getAllTickets } from "@/actions/tickets";
 import Link from "next/link";
 import { LifeBuoy, ChevronRight, AlertTriangle } from "lucide-react";
 import styles from "../admin.module.css";
+import UserAvatar from "@/components/UserAvatar";
 
 export default async function AdminTicketsPage() {
     const session = await auth();
@@ -61,19 +62,13 @@ export default async function AdminTicketsPage() {
                             <tr key={ticket.id}>
                                 <td>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-                                        <div style={{
-                                            width: '32px',
-                                            height: '32px',
-                                            borderRadius: '50%',
-                                            background: 'rgba(255,255,255,0.05)',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            fontSize: '0.75rem',
-                                            fontWeight: 700
-                                        }}>
-                                            {ticket.user?.name?.charAt(0) || ticket.user?.email?.charAt(0)}
-                                        </div>
+                                        <UserAvatar
+                                            image={ticket.user?.image}
+                                            name={ticket.user?.name}
+                                            email={ticket.user?.email}
+                                            lastLoginAt={ticket.user?.lastLoginAt}
+                                            size={32}
+                                        />
                                         <div>
                                             <p style={{ margin: 0, fontWeight: 700 }}>{ticket.user?.name || 'Usuario'}</p>
                                             <p style={{ margin: 0, fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>{ticket.user?.email}</p>

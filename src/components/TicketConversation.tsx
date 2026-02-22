@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, User, Shield, Paperclip, Loader2 } from "lucide-react";
+import { Send, Paperclip, Loader2 } from "lucide-react";
 import { replyToTicket } from "@/actions/tickets";
-import { TicketStatus } from "@prisma/client";
+import UserAvatar from "./UserAvatar";
 
 interface TicketConversationProps {
     ticket: any;
@@ -39,7 +39,6 @@ export default function TicketConversation({ ticket, currentUserId, isAdminView 
         }
     };
 
-
     return (
         <div style={{
             display: 'flex',
@@ -66,22 +65,16 @@ export default function TicketConversation({ ticket, currentUserId, isAdminView 
                                 maxWidth: '85%',
                                 display: 'flex',
                                 gap: '1rem',
-                                flexDirection: isOwn ? 'row-reverse' : 'row'
+                                flexDirection: isOwn ? 'row-reverse' : 'row',
+                                alignItems: 'flex-start'
                             }}>
-                                <div style={{
-                                    flexShrink: 0,
-                                    width: '36px',
-                                    height: '36px',
-                                    borderRadius: '50%',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    background: msg.isAdmin ? 'rgba(230, 57, 70, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                                    color: msg.isAdmin ? 'var(--accent)' : 'white',
-                                    border: '1px solid rgba(255,255,255,0.05)'
-                                }}>
-                                    {msg.isAdmin ? <Shield size={16} /> : <User size={16} />}
-                                </div>
+                                <UserAvatar
+                                    image={msg.user?.image}
+                                    name={msg.user?.name}
+                                    email={msg.user?.email || (msg.isAdmin ? "Soporte" : "Usuario")}
+                                    lastLoginAt={msg.user?.lastLoginAt}
+                                    size={36}
+                                />
 
                                 <div style={{ textAlign: isOwn ? 'right' : 'left' }}>
                                     <div style={{
@@ -105,7 +98,7 @@ export default function TicketConversation({ ticket, currentUserId, isAdminView 
                                         )}
                                     </div>
                                     <p style={{ fontSize: '0.65rem', marginTop: '0.4rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-                                        {msg.user?.name || 'Usuario'} • {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        {msg.user?.name || (msg.isAdmin ? 'Soporte PlateVault' : 'Usuario')} • {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </p>
                                 </div>
                             </div>
@@ -113,7 +106,6 @@ export default function TicketConversation({ ticket, currentUserId, isAdminView 
                     );
                 })}
             </div>
-
 
             {/* Input Area */}
             <div style={{ padding: '1.5rem 2rem', background: 'var(--surface)', borderTop: '1px solid var(--surface-border)' }}>

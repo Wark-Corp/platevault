@@ -125,6 +125,7 @@ export async function getUserTickets() {
     return await (prisma as any).ticket.findMany({
         where: { userId: session.user.id },
         include: {
+            user: { select: { name: true, email: true, image: true, lastLoginAt: true } },
             messages: {
                 orderBy: { createdAt: "desc" },
                 take: 1
@@ -143,7 +144,7 @@ export async function getAllTickets() {
 
     return await (prisma as any).ticket.findMany({
         include: {
-            user: { select: { name: true, email: true, image: true } },
+            user: { select: { name: true, email: true, image: true, lastLoginAt: true } },
             messages: {
                 orderBy: { createdAt: "desc" },
                 take: 1
@@ -152,6 +153,7 @@ export async function getAllTickets() {
         orderBy: { createdAt: "desc" }
     });
 }
+
 
 export async function getTicketDetails(ticketId: string) {
     const session = await auth();
@@ -168,17 +170,19 @@ export async function getTicketDetails(ticketId: string) {
                     image: true,
                     role: true,
                     createdAt: true,
+                    lastLoginAt: true,
                 }
             },
             messages: {
                 include: {
-                    user: { select: { name: true, image: true } },
+                    user: { select: { name: true, image: true, lastLoginAt: true } },
                     attachments: true
                 },
                 orderBy: { createdAt: "asc" }
             }
         }
     });
+
 
     if (!ticket) throw new Error("Ticket no encontrado");
 

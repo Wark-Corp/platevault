@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, Clock, AlertCircle, CheckCircle2 } from "lucide-react";
+import { ChevronRight, Clock } from "lucide-react";
+import UserAvatar from "@/components/UserAvatar";
 
 function getStatusStyle(status: string) {
     switch (status) {
@@ -66,14 +67,13 @@ export default function TicketList({ tickets }: { tickets: any[] }) {
                     onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--surface-border)'}
                 >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                        <div style={{
-                            width: '48px', height: '48px', borderRadius: '12px',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            flexShrink: 0,
-                            ...getStatusStyle(ticket.status)
-                        }}>
-                            {ticket.status === "RESOLVED" ? <CheckCircle2 size={24} /> : <AlertCircle size={24} />}
-                        </div>
+                        <UserAvatar
+                            image={ticket.user?.image}
+                            name={ticket.user?.name}
+                            email={ticket.user?.email}
+                            lastLoginAt={ticket.user?.lastLoginAt}
+                            size={48}
+                        />
                         <div>
                             <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 700 }}>{ticket.subject}</h3>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.4rem' }}>
