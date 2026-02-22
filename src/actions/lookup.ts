@@ -12,6 +12,12 @@ export type VehicleSpecs = {
     generation?: string;
     trim?: string;
     year?: string;
+    // Campos extendidos de la API española
+    vin?: string;
+    carroceria?: string;
+    traccion?: string;
+    motor_code?: string;
+    injeccion?: string;
     engine: {
         fuel: string;
         power_kw: number;
@@ -46,56 +52,49 @@ export type VehicleSpecs = {
 };
 
 async function lookupExternalPlate(plate: string): Promise<VehicleSpecs | null> {
-    const username = process.env.EXT_API_USERNAME || "demo"; // Fallback a demo si no está configurada
-    const url = `https://www.regcheck.org.uk/api/reg.asmx/CheckSpain?RegistrationNumber=${plate}&username=${username}`;
+    const apiKey = process.env.RAPIDAPI_KEY || "aa923e8b8bmshadd068dbbed6177p1f0d08jsn3db6b4dbf4e3";
+    const url = `https://matriculas-espana1.p.rapidapi.com/es?plate=${plate}`;
 
     try {
         const response = await fetch(url, {
             headers: {
-                'Accept': 'application/json'
+                'x-rapidapi-key': apiKey,
+                'x-rapidapi-host': 'matriculas-espana1.p.rapidapi.com'
             }
         });
 
         if (!response.ok) {
-            console.error("Error en API externa:", response.statusText);
+            console.error("Error en API externa (RapidAPI):", response.statusText);
             return null;
         }
 
-        const xmlString = await response.text();
+        const data = await response.json();
 
-        // RegCheck devuelve un XML que contiene un JSON en una etiqueta <vehicleJson>
-        // O directamente el JSON si la cabecera Accept funciona.
-        // Como precaución, intentamos parsear ambos casos.
-        let data: any;
-        try {
-            data = JSON.parse(xmlString);
-        } catch (e) {
-            // Intento de extracción simple si viene envuelto en XML
-            const jsonMatch = xmlString.match(/<vehicleJson>([\s\S]*?)<\/vehicleJson>/);
-            if (jsonMatch && jsonMatch[1]) {
-                data = JSON.parse(jsonMatch[1]);
-            } else {
-                console.error("No se pudo extraer JSON de la respuesta de RegCheck");
-                return null;
-            }
+        if (!data || Object.keys(data).length === 0 || !data.MARCA) {
+            return null;
         }
 
-        if (!data || !data.Description) return null;
+        const kw = parseInt(data.KWs) || 0;
 
-        // Mapeo de RegCheck a VehicleSpecs
+        // Mapeo de la nueva API a VehicleSpecs
         return {
-            make: data.CarMake?.CurrentTextValue || "Desconocido",
-            model: data.CarModel?.CurrentTextValue || data.Description,
-            generation: data.RegistrationYear || "N/A",
-            trim: data.Series || data.ModelDescription || "Estándar",
-            year: data.RegistrationYear,
+            make: data.MARCA || "Desconocido",
+            model: data.MODELO || "Desconocido",
+            generation: "N/A", // La API no parece proveer el año/generación directamente
+            trim: data.TPMOTOR || "Estándar",
+            year: "N/A",
+            vin: data.VIN || undefined,
+            carroceria: data.CARROCERIA || undefined,
+            traccion: data.TRACCION || undefined,
+            motor_code: data.MOTOR || undefined,
+            injeccion: data.INJECCION || undefined,
             engine: {
-                fuel: data.FuelType?.CurrentTextValue || "Desconocido",
-                power_kw: parseInt(data.EnginePower?.CurrentTextValue) || 0,
-                power_cv: Math.round((parseInt(data.EnginePower?.CurrentTextValue) || 0) * 1.36),
-                displacement_cc: parseInt(data.EngineSize?.CurrentTextValue) || 0,
-                architecture: data.EngineCode?.CurrentTextValue || "L4",
-                turbo: (data.Description || "").toLowerCase().includes("turbo"),
+                fuel: data.TYMOTOR || "Desconocido",
+                power_kw: kw,
+                power_cv: Math.round(kw * 1.36),
+                displacement_cc: 0, // No provee cilindrada
+                architecture: data.MOTOR || "N/A",
+                turbo: (data.INJECCION || "").toLowerCase().includes("turbo"),
                 euro_norm: "N/A"
             },
             dimensions: {
@@ -105,7 +104,7 @@ async function lookupExternalPlate(plate: string): Promise<VehicleSpecs | null> 
                 wheelbase: 0
             },
             weights: {
-                kerb_weight: parseInt(data.WeightByFuelType?.CurrentTextValue) || 0,
+                kerb_weight: 0,
                 max_weight: 0
             },
             wheels: {
@@ -113,15 +112,15 @@ async function lookupExternalPlate(plate: string): Promise<VehicleSpecs | null> 
                 rims: "Aleación"
             },
             emissions: {
-                dgt_label: "Consultar" // La API internacional no suele dar la etiqueta DGT
+                dgt_label: "Consultar"
             },
             pricing: {
                 msrp: "N/A",
-                source: "RegCheck Real-Time API"
+                source: "API Matrículas España (RapidAPI)"
             }
         };
     } catch (error) {
-        console.error("Error consultando RegCheck:", error);
+        console.error("Error consultando API Matrículas España:", error);
         return null;
     }
 }

@@ -14,7 +14,8 @@ import {
     Star,
     ArrowLeftRight,
     Info,
-    CheckCircle2
+    CheckCircle2,
+    Car
 } from "lucide-react";
 import { toggleFavorite, isFavorite } from "@/actions/favorites";
 
@@ -136,6 +137,34 @@ export default function TechnicalSheet({ specs, plate, versionId }: Props) {
             </div>
 
             <div className={styles.grid}>
+                {/* Datos del Vehículo (API España) */}
+                {(specs.vin || specs.carroceria || specs.traccion) && (
+                    <section className={`${styles.section} glass`}>
+                        <h3><Car size={18} /> Datos del Vehículo</h3>
+                        {specs.vin && (
+                            <div className={styles.item}>
+                                <div className={styles.itemLabel}>
+                                    <span>Nº Bastidor (VIN)</span> <strong style={{ fontFamily: 'monospace', letterSpacing: '1px' }}>{specs.vin}</strong>
+                                </div>
+                            </div>
+                        )}
+                        {specs.carroceria && (
+                            <div className={styles.item}>
+                                <div className={styles.itemLabel}>
+                                    <span>Carrocería</span> <strong style={{ textTransform: 'capitalize' }}>{specs.carroceria.toLowerCase()}</strong>
+                                </div>
+                            </div>
+                        )}
+                        {specs.traccion && (
+                            <div className={styles.item}>
+                                <div className={styles.itemLabel}>
+                                    <span>Tracción</span> <strong style={{ textTransform: 'capitalize' }}>{specs.traccion.toLowerCase()}</strong>
+                                </div>
+                            </div>
+                        )}
+                    </section>
+                )}
+
                 {/* Identificación */}
                 <section className={`${styles.section} glass`}>
                     <h3><Settings size={18} /> Motorización</h3>
@@ -172,6 +201,22 @@ export default function TechnicalSheet({ specs, plate, versionId }: Props) {
                             <span>Arquitectura</span> <strong>{specs.engine.architecture}</strong>
                         </div>
                     </div>
+
+                    {specs.motor_code && specs.motor_code !== specs.engine.architecture && (
+                        <div className={styles.item}>
+                            <div className={styles.itemLabel}>
+                                <span>Cod. Motor</span> <strong style={{ fontFamily: 'monospace' }}>{specs.motor_code}</strong>
+                            </div>
+                        </div>
+                    )}
+
+                    {specs.injeccion && (
+                        <div className={styles.item}>
+                            <div className={styles.itemLabel}>
+                                <span>Inyección</span> <strong style={{ textTransform: 'capitalize' }}>{specs.injeccion.toLowerCase()}</strong>
+                            </div>
+                        </div>
+                    )}
 
                     <div className={styles.item}>
                         <div className={styles.itemLabel}>
