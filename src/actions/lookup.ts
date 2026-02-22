@@ -68,7 +68,14 @@ async function lookupExternalPlate(plate: string): Promise<VehicleSpecs | null> 
             return null;
         }
 
-        const data = await response.json();
+        const responseData = await response.json();
+
+        // La API devuelve un array, e.g. [{ MARCA: 'VW', ... }]
+        let data = responseData;
+        if (Array.isArray(responseData)) {
+            if (responseData.length === 0) return null;
+            data = responseData[0];
+        }
 
         if (!data || Object.keys(data).length === 0 || !data.MARCA) {
             return null;
@@ -77,24 +84,25 @@ async function lookupExternalPlate(plate: string): Promise<VehicleSpecs | null> 
         const kw = parseInt(data.KWs) || 0;
 
         // Mapeo de la nueva API a VehicleSpecs
+        // Nota: La API devuelve "INYECCION" con Y, pero nosotros mapeamos a "injeccion" (por tipado previo)
         return {
             make: data.MARCA || "Desconocido",
             model: data.MODELO || "Desconocido",
             generation: "N/A", // La API no parece proveer el año/generación directamente
             trim: data.TPMOTOR || "Estándar",
-            year: "N/A",
+            year: data.FECHA_MATRICULACION ? data.FECHA_MATRICULACION.split('/')[2] : "N/A",
             vin: data.VIN || undefined,
             carroceria: data.CARROCERIA || undefined,
             traccion: data.TRACCION || undefined,
             motor_code: data.MOTOR || undefined,
-            injeccion: data.INJECCION || undefined,
+            injeccion: data.INYECCION || undefined,
             engine: {
                 fuel: data.TYMOTOR || "Desconocido",
                 power_kw: kw,
                 power_cv: Math.round(kw * 1.36),
                 displacement_cc: 0, // No provee cilindrada
                 architecture: data.MOTOR || "N/A",
-                turbo: (data.INJECCION || "").toLowerCase().includes("turbo"),
+                turbo: (data.INYECCION || "").toLowerCase().includes("turbo") || (data.INYECCION || "").toLowerCase().includes("inyección directa"),
                 euro_norm: "N/A"
             },
             dimensions: {
