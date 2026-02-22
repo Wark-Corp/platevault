@@ -111,7 +111,7 @@ export default async function Home() {
                 <h3>Básico</h3>
                 <div className={styles.priceValue}>€0<span>/mes</span></div>
                 <ul className={styles.priceFeatures}>
-                  <li><Check size={16} /> 5 búsquedas diarias</li>
+                  <li><Check size={16} /> 15 búsquedas diarias</li>
                   <li><Check size={16} /> Datos básicos de motor</li>
                   <li><Check size={16} /> Historial limitado</li>
                 </ul>
