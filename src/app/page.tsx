@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import SupportSystem from "@/components/SupportSystem";
+import StatusWidget from "@/components/StatusWidget";
 
 export default async function Home() {
   const stats = await getPublicStats();
@@ -253,6 +254,7 @@ export default async function Home() {
               <p>
                 La plataforma líder en España para la consulta de especificaciones técnicas automotrices. Diseñada para profesionales por Wark Corp.
               </p>
+              <StatusWidget />
             </div>
 
             <div className={styles.footerLinks}>
