@@ -60,7 +60,8 @@ async function lookupExternalPlate(plate: string): Promise<VehicleSpecs | null> 
             headers: {
                 'x-rapidapi-key': apiKey,
                 'x-rapidapi-host': 'api-matriculas-espana.p.rapidapi.com'
-            }
+            },
+            cache: 'no-store'
         });
 
         if (!response.ok) {
