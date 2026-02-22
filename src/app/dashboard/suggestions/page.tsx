@@ -123,6 +123,7 @@ export default function SuggestionsPage() {
                                 value={plate}
                                 onChange={(e) => setPlate(e.target.value.toUpperCase())}
                                 placeholder="1234ABC"
+                                maxLength={7}
                                 style={{
                                     width: '100%',
                                     maxWidth: '400px',
