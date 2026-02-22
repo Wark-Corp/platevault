@@ -22,7 +22,9 @@ export default async function Home() {
             Plate<span>Vault</span>
           </div>
           <nav className={styles.nav}>
-            <SupportSystem />
+            <div className={styles.supportWrapper}>
+              <SupportSystem />
+            </div>
             <Link href="/auth/login" className={styles.loginBtn}>Iniciar Sesión</Link>
             <Link href="/auth/register" className={`${styles.registerBtn} premium-gradient`}>Registrarse</Link>
           </nav>
