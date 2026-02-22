@@ -78,19 +78,7 @@ export default function SuggestionsPage() {
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <header className={styles.header}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
-                    <div style={{
-                        padding: '0.8rem',
-                        background: 'linear-gradient(135deg, rgba(230, 57, 70, 0.2), rgba(255, 183, 3, 0.2))',
-                        borderRadius: '16px',
-                        color: 'var(--accent)',
-                        boxShadow: '0 8px 32px rgba(230, 57, 70, 0.15)',
-                        border: '1px solid rgba(230, 57, 70, 0.2)'
-                    }}>
-                        <Lightbulb size={28} />
-                    </div>
-                    <h1>Sugerir Vínculo</h1>
-                </div>
+                <h1>Sugerir Vínculo</h1>
                 <p>Ayúdanos a mejorar PlateVault vinculando matrículas con sus modelos exactos.</p>
             </header>
 
