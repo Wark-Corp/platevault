@@ -70,14 +70,18 @@ async function lookupExternalPlate(plate: string): Promise<VehicleSpecs | null> 
 
         const responseData = await response.json();
 
-        // La API devuelve un array, e.g. [{ MARCA: 'VW', ... }]
+        // La API puede devolver { MARCA: ... } directo o array [{ MARCA: ... }]
         let data = responseData;
         if (Array.isArray(responseData)) {
-            if (responseData.length === 0) return null;
+            if (responseData.length === 0) {
+                console.log("RapidAPI retornó un array vacío para", plate);
+                return null;
+            }
             data = responseData[0];
         }
 
         if (!data || Object.keys(data).length === 0 || !data.MARCA) {
+            console.log("RapidAPI retornó objeto inválido o vacío para", plate, ":", data);
             return null;
         }
 
