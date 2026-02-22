@@ -303,9 +303,14 @@
 }
 
 .auditCol {
+    /* Eliminamos display flex del td para evitar bugs visuales con el padding */
+}
+
+.auditColInner {
     display: flex;
     flex-direction: column;
 }
+
 
 .auditIp {
     font-size: 0.8rem;

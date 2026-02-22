@@ -93,16 +93,18 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                                         {user.lastLoginIp || "Sin registros"}
                                     </td>
                                     <td className={styles.auditCol}>
-                                        {user.lastLoginAt ? (
-                                            <>
-                                                <span className={styles.auditDate}>{new Date(user.lastLoginAt).toLocaleDateString()}</span>
-                                                <span className={styles.auditTime}>
-                                                    {new Date(user.lastLoginAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                                </span>
-                                            </>
-                                        ) : (
-                                            <span className={styles.auditDate}>Nunca</span>
-                                        )}
+                                        <div className={styles.auditColInner}>
+                                            {user.lastLoginAt ? (
+                                                <>
+                                                    <span className={styles.auditDate}>{new Date(user.lastLoginAt).toLocaleDateString()}</span>
+                                                    <span className={styles.auditTime}>
+                                                        {new Date(user.lastLoginAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <span className={styles.auditDate}>Nunca</span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className={styles.auditDate}>{new Date(user.createdAt).toLocaleDateString()}</td>
                                     <td>

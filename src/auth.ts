@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/db";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { headers } from "next/headers";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
     adapter: PrismaAdapter(prisma) as any,
@@ -53,12 +54,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
                 // Actualización silenciosa de auditoría (sin await para no bloquear la sesión si falla)
                 if (token.sub) {
+                    const headersList = await headers();
+                    const ip = headersList.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+
                     prisma.user.update({
                         where: { id: token.sub },
                         data: {
                             lastLoginAt: new Date(),
-                            // La IP se gestionará mejor en un middleware o evento de login si NextAuth lo permite,
-                            // por ahora registramos el tiempo.
+                            lastLoginIp: ip,
                         }
                     }).catch(err => console.error("Error updating audit log:", err));
                 }
