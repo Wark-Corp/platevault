@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "../app/dashboard/dashboard.module.css";
 import { logout } from "@/actions/auth";
-import { Search, Clock, User as UserIcon, LogOut, Shield, Star, ArrowLeftRight, LifeBuoy, Zap, Menu, X } from "lucide-react";
+import { Search, Clock, User as UserIcon, LogOut, Shield, Star, ArrowLeftRight, LifeBuoy, Zap, Menu, X, Lightbulb } from "lucide-react";
 import SupportSystem from "@/components/SupportSystem";
 import { useState } from "react";
 
@@ -61,6 +61,9 @@ export default function Sidebar({ session }: { session: any }) {
                     )}
                     <Link href="/dashboard/tickets" className={pathname.startsWith("/dashboard/tickets") ? styles.active : ""} onClick={closeMenu}>
                         <LifeBuoy size={18} /> Mis Tickets
+                    </Link>
+                    <Link href="/dashboard/suggestions" className={pathname === "/dashboard/suggestions" ? styles.active : ""} onClick={closeMenu}>
+                        <Lightbulb size={18} /> Sugerir Vínculo
                     </Link>
                     <SupportSystem variant="sidebar" />
 

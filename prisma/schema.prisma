@@ -39,6 +39,7 @@ model User {
   favorites     Favorite[]
   tickets       Ticket[]
   ticketMessages TicketMessage[]
+  suggestions   PlateSuggestion[]
 }
 
 model Account {
@@ -109,6 +110,7 @@ model VehicleVersion {
   sources         SpecSource[]
   mappings        PlateMapping[]
   favoritedBy     Favorite[]
+  suggestions     PlateSuggestion[]
 }
 
 model PlateMapping {
@@ -186,6 +188,27 @@ enum TicketDepartment {
   MARKETING
   LEGAL
   SECURITY
+}
+
+enum SuggestionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model PlateSuggestion {
+  id            String           @id @default(cuid())
+  plate         String
+  userId        String
+  versionId     String?          // Modelo sugerido del catálogo
+  modelNotFound Boolean          @default(false)
+  status        SuggestionStatus @default(PENDING)
+  adminNote     String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  version       VehicleVersion?  @relation(fields: [versionId], references: [id])
 }
 
 model Ticket {

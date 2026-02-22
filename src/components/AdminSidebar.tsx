@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "../app/admin/admin.module.css";
 import { logout } from "@/actions/auth";
-import { BarChart, Car, Users, Link as LinkIcon, LogOut, LayoutDashboard, LifeBuoy, ShieldCheck, Menu, X } from "lucide-react";
+import { BarChart, Car, Users, Link as LinkIcon, LogOut, LayoutDashboard, LifeBuoy, ShieldCheck, Menu, X, ClipboardList } from "lucide-react";
 import { useState } from "react";
 
 export default function AdminSidebar({ session }: { session: any }) {
@@ -53,6 +53,9 @@ export default function AdminSidebar({ session }: { session: any }) {
                             </Link>
                             <Link href="/admin/users" className={pathname?.startsWith("/admin/users") ? styles.active : ""} onClick={closeMenu}>
                                 <Users size={18} /> Usuarios
+                            </Link>
+                            <Link href="/admin/suggestions" className={pathname?.startsWith("/admin/suggestions") ? styles.active : ""} onClick={closeMenu}>
+                                <ClipboardList size={18} /> Sugerencias
                             </Link>
                         </>
                     )}
