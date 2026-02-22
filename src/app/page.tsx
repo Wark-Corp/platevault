@@ -42,8 +42,8 @@ export default async function Home() {
               </span>
             </div>
             <h1 className={styles.title}>
-              Información Técnica Real, <br />
-              <span>Sin Compromisos.</span>
+              Información Técnica Real<br />
+              <span>Sin Compromisos</span>
             </h1>
             <p className={styles.subtitle}>
               Accede al catálogo técnico más completo de vehículos en España mediante matrícula.
