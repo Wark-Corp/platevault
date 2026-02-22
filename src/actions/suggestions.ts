@@ -47,7 +47,8 @@ export async function createSuggestion(data: {
  */
 export async function getPendingSuggestions() {
     const session = await auth();
-    if ((session?.user as any)?.role !== "ADMIN") {
+    const user = session?.user as any;
+    if (!user || user.role !== "ADMIN") {
         throw new Error("No autorizado");
     }
 
@@ -91,7 +92,8 @@ export async function searchCatalogModels(query: string) {
  */
 export async function approveSuggestion(suggestionId: string, finalVersionId: string, adminNote?: string) {
     const session = await auth();
-    if ((session?.user as any)?.role !== "ADMIN") {
+    const user = session?.user as any;
+    if (!user || user.role !== "ADMIN") {
         return { error: "No autorizado" };
     }
 
@@ -129,7 +131,7 @@ export async function approveSuggestion(suggestionId: string, finalVersionId: st
             }
         });
 
-        await logAudit(session.user.id, "PLATE_SUGGESTION_APPROVED", {
+        await logAudit(user.id, "PLATE_SUGGESTION_APPROVED", {
             plate: suggestion.plate,
             suggestionId: suggestion.id,
             versionId: finalVersionId
@@ -149,7 +151,8 @@ export async function approveSuggestion(suggestionId: string, finalVersionId: st
  */
 export async function rejectSuggestion(suggestionId: string, adminNote?: string) {
     const session = await auth();
-    if ((session?.user as any)?.role !== "ADMIN") {
+    const user = session?.user as any;
+    if (!user || user.role !== "ADMIN") {
         return { error: "No autorizado" };
     }
 
@@ -162,7 +165,7 @@ export async function rejectSuggestion(suggestionId: string, adminNote?: string)
             }
         });
 
-        await logAudit(session.user.id, "PLATE_SUGGESTION_REJECTED", {
+        await logAudit(user.id, "PLATE_SUGGESTION_REJECTED", {
             plate: suggestion.plate,
             suggestionId: suggestion.id
         });
