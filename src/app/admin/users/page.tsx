@@ -38,43 +38,87 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            <th>Nombre</th>
+                            <th>Usuario</th>
                             <th>Email</th>
                             <th>Rol</th>
+                            <th>2FA</th>
+                            <th>Última IP</th>
+                            <th>Último Acceso</th>
                             <th>Registro</th>
                             <th style={{ textAlign: 'right' }}>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => (
-                            <tr key={user.id}>
-                                <td>{user.name || "-"}</td>
-                                <td>{user.email}</td>
-                                <td>
-                                    <span style={{
-                                        padding: '0.2rem 0.5rem',
-                                        borderRadius: '4px',
-                                        fontSize: '0.8rem',
-                                        background: user.role === 'ADMIN' ? 'rgba(230, 57, 70, 0.2)' : 'rgba(255, 255, 255, 0.1)',
-                                        color: user.role === 'ADMIN' ? 'var(--accent)' : 'white'
-                                    }}>
-                                        {user.role}
-                                    </span>
-                                </td>
-                                <td style={{ fontSize: '0.85rem' }}>{new Date(user.createdAt).toLocaleDateString()}</td>
-                                <td>
-                                    <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                        <Link href={`/admin/users/${user.id}`} style={{ color: 'var(--accent)', display: 'inline-flex', padding: '0.2rem' }} title="Editar Usuario">
-                                            <Edit2 size={16} />
-                                        </Link>
-                                        <DeleteUserButton id={user.id} />
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                        {users.map((u) => {
+                            const user = u as any;
+                            // Consideramos "Online" si ha tenido actividad en los últimos 5 minutos
+                            const isOnline = user.lastLoginAt && (new Date().getTime() - new Date(user.lastLoginAt).getTime() < 5 * 60 * 1000);
+
+                            return (
+                                <tr key={user.id}>
+                                    <td>
+                                        <div className={styles.userCell}>
+                                            <div className={styles.avatarWrapper}>
+                                                {user.image ? (
+                                                    <img
+                                                        src={user.image}
+                                                        alt={user.name || ""}
+                                                        className={styles.avatarImg}
+                                                    />
+                                                ) : (
+                                                    <div className={styles.avatarPlaceholder}>
+                                                        {(user.name || user.email || "?")[0].toUpperCase()}
+                                                    </div>
+                                                )}
+                                                <div
+                                                    className={`${styles.statusDot} ${isOnline ? styles.onlineDot : styles.offlineDot}`}
+                                                    title={isOnline ? "Online" : "Offline"}
+                                                />
+                                            </div>
+                                            <span className={styles.userName}>{user.name || "-"}</span>
+                                        </div>
+                                    </td>
+                                    <td>{user.email}</td>
+                                    <td>
+                                        <span className={`${styles.roleBadge} ${user.role === 'ADMIN' ? styles.roleAdmin : styles.roleUser}`}>
+                                            {user.role}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div className={`${styles.twoFactorBadge} ${user.twoFactorEnabled ? styles.badgeActive : styles.badgeInactive}`}>
+                                            {user.twoFactorEnabled ? "ACTIVO" : "INACTIVO"}
+                                        </div>
+                                    </td>
+                                    <td className={styles.auditIp}>
+                                        {user.lastLoginIp || "Sin registros"}
+                                    </td>
+                                    <td className={styles.auditCol}>
+                                        {user.lastLoginAt ? (
+                                            <>
+                                                <span className={styles.auditDate}>{new Date(user.lastLoginAt).toLocaleDateString()}</span>
+                                                <span className={styles.auditTime}>
+                                                    {new Date(user.lastLoginAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <span className={styles.auditDate}>Nunca</span>
+                                        )}
+                                    </td>
+                                    <td className={styles.auditDate}>{new Date(user.createdAt).toLocaleDateString()}</td>
+                                    <td>
+                                        <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'flex-end', alignItems: 'center' }}>
+                                            <Link href={`/admin/users/${user.id}`} style={{ color: 'var(--accent)', display: 'inline-flex', padding: '0.2rem' }} title="Editar Usuario">
+                                                <Edit2 size={16} />
+                                            </Link>
+                                            <DeleteUserButton id={user.id} />
+                                        </div>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                         {users.length === 0 && (
                             <tr>
-                                <td colSpan={5} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
+                                <td colSpan={8} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
                                     No hay usuarios que coincidan con la búsqueda.
                                 </td>
                             </tr>
