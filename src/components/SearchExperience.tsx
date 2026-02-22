@@ -152,26 +152,37 @@ export default function SearchExperience() {
                 </button>
             </div>
 
-            <div className={`${styles.searchBar} glass`}>
+            {source === "external" && (
+                <div className={styles.apiUnavailableBox}>
+                    <p style={{ margin: 0, display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                        <Info size={20} style={{ flexShrink: 0, marginTop: "2px" }} />
+                        <span>
+                            <strong>Servicio temporalmente deshabilitado:</strong> Las consultas a fuentes externas están bajo mantenimiento por actualización de nuestras políticas Anti-Scraping. Por favor, usa nuestra base de datos local (PlateVault).
+                        </span>
+                    </p>
+                </div>
+            )}
+
+            <div className={`${styles.searchBar} ${source === "external" ? styles.searchBarDisabled : ""} glass`}>
                 <input
                     type="text"
                     placeholder="1234ABC"
                     maxLength={7}
                     value={plate}
                     onChange={(e) => setPlate(e.target.value.toUpperCase())}
-                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                    disabled={!!(stats && !stats.allowed && !stats.premium)}
+                    onKeyDown={(e) => e.key === "Enter" && source === "internal" && handleSearch()}
+                    disabled={source === "external" || !!(stats && !stats.allowed && !stats.premium)}
                 />
                 <button
                     onClick={() => handleSearch()}
-                    disabled={loading || !!(stats && !stats.allowed && !stats.premium)}
+                    disabled={source === "external" || loading || !!(stats && !stats.allowed && !stats.premium)}
                 >
                     {loading ? <Loader2 className={styles.spin} /> : <Search size={20} />}
                     <span>{loading ? "Consultando..." : (!stats?.allowed && !stats?.premium ? "Límite" : "Consultar")}</span>
                 </button>
             </div>
 
-            {error && (
+            {error && source === "internal" && (
                 <div className={styles.errorBox}>
                     <p>{error}</p>
                 </div>

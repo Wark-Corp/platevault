@@ -193,6 +193,23 @@
     font-weight: 500;
 }
 
+.apiUnavailableBox {
+    padding: 1rem;
+    background: rgba(243, 156, 18, 0.1);
+    border: 1px solid #f39c12;
+    border-radius: 8px;
+    color: #f39c12;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.searchBarDisabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
 .spin {
     animation: spin 1s linear infinite;
 }
