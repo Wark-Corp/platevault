@@ -204,6 +204,18 @@
     line-height: 1.5;
 }
 
+.warningBox {
+    padding: 1rem;
+    background: rgba(255, 183, 3, 0.1);
+    border: 1px solid #ffb703;
+    border-radius: 12px;
+    color: #ffb703;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
 .searchBarDisabled {
     opacity: 0.5;
     pointer-events: none;

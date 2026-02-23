@@ -163,6 +163,17 @@ export default function SearchExperience() {
                 </div>
             )}
 
+            {source === "internal" && (
+                <div className={styles.warningBox}>
+                    <p style={{ margin: 0, display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                        <Info size={20} style={{ flexShrink: 0, marginTop: "2px" }} />
+                        <span>
+                            <strong>Aviso:</strong> El catálogo es reducido y puede que la matrícula que buscas no esté identificada.
+                        </span>
+                    </p>
+                </div>
+            )}
+
             <div className={`${styles.searchBar} ${source === "external" ? styles.searchBarDisabled : ""} glass`}>
                 <input
                     type="text"
